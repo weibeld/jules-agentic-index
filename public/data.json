@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://autogen-ai-docs.com",
+    "org": "microsoft/autogen",
+    "stars": "22.1k",
+    "released": "2023-10-12",
+    "tags": ["LLM", "Python", "Agent", "Open Source"]
+  },
+  {
+    "url": "https://crewai-project.com",
+    "org": "joaomdmoura/crewAI",
+    "stars": "11.8k",
+    "released": "2023-11-28",
+    "tags": ["Framework", "Agent", "Collaboration"]
+  },
+  {
+    "url": "https://open-interpreter.dev",
+    "org": "KillianLucas/open-interpreter",
+    "stars": "42.5k",
+    "released": "2023-08-15",
+    "tags": ["Code Generation", "Terminal", "Open Source"]
+  },
+  {
+    "url": "https://langchain-docs.com",
+    "org": "langchain-ai/langchain",
+    "stars": "78.3k",
+    "released": "2022-10-24",
+    "tags": ["Framework", "Python", "LLM", "API"]
+  }
+]
