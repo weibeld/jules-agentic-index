@@ -36,21 +36,23 @@
                     <div class="text-gray-400 dark:text-[#92adc8] flex border-none bg-gray-100 dark:bg-[#243647] items-center justify-center pl-4 rounded-l-lg border-r-0">
                       <span class="material-symbols-outlined text-2xl">search</span>
                     </div>
-                    <input id="search-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-black dark:text-white focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-[#243647] focus:border-none h-full placeholder:text-gray-400 dark:placeholder:text-[#92adc8] px-4 pl-2 text-base font-normal leading-normal" placeholder="Search by URL, org, or tags (e.g., tags:python org:openai)" value=""/>
+                    <input id="search-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-black dark:text-white focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-[#243647] focus:border-none h-full placeholder:text-gray-400 dark:placeholder:text-[#92adc8] px-4 pl-2 text-base font-normal leading-normal" placeholder="Search by URL, org, or tags (e.g., tags:python org:openai)" value="" />
                   </div>
                 </label>
               </div>
-              <div id="chips-container" class="flex gap-2 sm:gap-3 p-3 flex-wrap pr-4">
-                <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-[#243647] pl-4 pr-2 text-gray-700 dark:text-white" id="all-tags-button">
-                  <p class="text-sm font-medium leading-normal">All Tags</p>
-                  <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
-                </button>
+              <div class="relative">
+                <div id="chips-container" class="flex gap-2 sm:gap-3 p-3 flex-wrap pr-4">
+                  <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-[#243647] pl-4 pr-2 text-gray-700 dark:text-white" id="all-tags-button">
+                    <p class="text-sm font-medium leading-normal">All Tags</p>
+                    <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
+                  </button>
+                </div>
                 <div id="all-tags-dropdown" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-[#243647] ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="all-tags-button">
                   <div class="py-1" role="none">
                   </div>
                 </div>
               </div>
-              <div id="image-grid" class="flex flex-col gap-4 p-4">
+              <div id="image-grid" class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 p-4">
               </div>
               <div id="empty-state" class="flex flex-col px-4 py-16 hidden">
                 <div class="flex flex-col items-center gap-6 text-center">
