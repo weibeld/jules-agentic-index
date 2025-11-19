@@ -1,3 +1,4 @@
+
 import './style.css';
 
 const imageGrid = document.getElementById('image-grid');
@@ -60,49 +61,68 @@ function extractTags(projects) {
 }
 
 function renderTags() {
-  chipsContainer.innerHTML = '';
-  const sortedTags = Array.from(allTags).sort();
-  sortedTags.slice(0, 5).forEach(tag => {
+  const tagCounts = {};
+  projects.forEach(project => {
+    project.tags.forEach(tag => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+    });
+  });
+
+  const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
+  const topTags = sortedTags.slice(0, 5);
+
+  topTags.forEach(tag => {
     const button = document.createElement('button');
-    button.className = 'flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-[#243647] px-4 text-gray-700 dark:text-white';
-    button.innerHTML = `<p class="text-sm font-medium leading-normal">${tag}</p>`;
+    button.className = `flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full px-4 text-sm font-medium leading-normal bg-gray-100 dark:bg-[#243647] text-gray-700 dark:text-white`;
+    button.innerHTML = `<p>${tag}</p>`;
     button.addEventListener('click', () => {
       toggleTag(tag, button);
       filterAndRenderProjects();
     });
-    chipsContainer.appendChild(button);
+    if (chipsContainer.lastChild) {
+      chipsContainer.insertBefore(button, chipsContainer.lastChild);
+    } else {
+      chipsContainer.appendChild(button);
+    }
   });
 }
 
 function populateDropdown() {
   const dropdownContent = allTagsDropdown.querySelector('.py-1');
-  dropdownContent.innerHTML = '';
-  const sortedTags = Array.from(allTags).sort();
-  sortedTags.forEach(tag => {
-    const link = document.createElement('a');
-    link.href = '#';
-    link.className = 'text-gray-700 dark:text-white block px-4 py-2 text-sm';
-    link.textContent = tag;
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      toggleTag(tag);
-      filterAndRenderProjects();
+  if (dropdownContent) {
+    while (dropdownContent.firstChild) {
+      dropdownContent.removeChild(dropdownContent.firstChild);
+    }
+
+    const sortedTags = Array.from(allTags).sort();
+    sortedTags.forEach(tag => {
+      const link = document.createElement('a');
+      link.href = '#';
+      link.className = 'text-gray-700 dark:text-white block px-4 py-2 text-sm';
+      link.textContent = tag;
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const button = Array.from(chipsContainer.querySelectorAll('button')).find(btn => btn.textContent === tag);
+        toggleTag(tag, button);
+        filterAndRenderProjects();
+        allTagsDropdown.classList.add('hidden');
+      });
+      dropdownContent.appendChild(link);
     });
-    dropdownContent.appendChild(link);
-  });
+  }
 }
 
 function toggleTag(tag, button = null) {
   if (selectedTags.has(tag)) {
     selectedTags.delete(tag);
     if (button) {
-      button.classList.remove('bg-primary/20', 'dark:bg-primary', 'text-primary', 'dark:text-white');
+      button.classList.remove('bg-primary/20', 'dark:bg-[#243647]', 'text-primary', 'dark:text-white', 'ring-1', 'ring-inset', 'ring-primary/30', 'dark:ring-transparent');
       button.classList.add('bg-gray-100', 'dark:bg-[#243647]', 'text-gray-700', 'dark:text-white');
     }
   } else {
     selectedTags.add(tag);
     if (button) {
-      button.classList.add('bg-primary/20', 'dark:bg-primary', 'text-primary', 'dark:text-white');
+      button.classList.add('bg-primary/20', 'dark:bg-[#243647]', 'text-primary', 'dark:text-white', 'ring-1', 'ring-inset', 'ring-primary/30', 'dark:ring-transparent');
       button.classList.remove('bg-gray-100', 'dark:bg-[#243647]', 'text-gray-700', 'dark:text-white');
     }
   }
