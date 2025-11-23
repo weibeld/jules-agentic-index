@@ -60,17 +60,26 @@ function extractTags(projects) {
 }
 
 function renderTags() {
-  chipsContainer.innerHTML = '';
+  // Clear existing tag buttons but keep the All Tags button
+  const existingButtons = chipsContainer.querySelectorAll('button:not(#all-tags-button)');
+  existingButtons.forEach(btn => btn.remove());
+  
   const sortedTags = Array.from(allTags).sort();
-  sortedTags.slice(0, 5).forEach(tag => {
+  const topTags = sortedTags.slice(0, 5);
+  topTags.forEach(tag => {
     const button = document.createElement('button');
-    button.className = 'flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-[#243647] px-4 text-gray-700 dark:text-white';
-    button.innerHTML = `<p class="text-sm font-medium leading-normal">${tag}</p>`;
+    button.className = `flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full px-4 text-sm font-medium leading-normal bg-gray-100 dark:bg-[#243647] text-gray-700 dark:text-white`;
+    button.textContent = tag;
     button.addEventListener('click', () => {
       toggleTag(tag, button);
       filterAndRenderProjects();
     });
-    chipsContainer.appendChild(button);
+    const allTagsButton = document.getElementById('all-tags-button');
+    if (allTagsButton) {
+      chipsContainer.insertBefore(button, allTagsButton);
+    } else {
+      chipsContainer.appendChild(button);
+    }
   });
 }
 
@@ -96,14 +105,14 @@ function toggleTag(tag, button = null) {
   if (selectedTags.has(tag)) {
     selectedTags.delete(tag);
     if (button) {
-      button.classList.remove('bg-primary/20', 'dark:bg-primary', 'text-primary', 'dark:text-white');
-      button.classList.add('bg-gray-100', 'dark:bg-[#243647]', 'text-gray-700', 'dark:text-white');
+      button.classList.remove('bg-primary/20', 'text-primary', 'ring-1', 'ring-inset', 'ring-primary/30', 'dark:ring-transparent');
+      button.classList.add('bg-gray-100', 'text-gray-700');
     }
   } else {
     selectedTags.add(tag);
     if (button) {
-      button.classList.add('bg-primary/20', 'dark:bg-primary', 'text-primary', 'dark:text-white');
-      button.classList.remove('bg-gray-100', 'dark:bg-[#243647]', 'text-gray-700', 'dark:text-white');
+      button.classList.add('bg-primary/20', 'text-primary', 'ring-1', 'ring-inset', 'ring-primary/30', 'dark:ring-transparent');
+      button.classList.remove('bg-gray-100', 'text-gray-700');
     }
   }
 }
